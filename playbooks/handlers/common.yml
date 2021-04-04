@@ -1,0 +1,6 @@
+---
+- name: restart fail2ban
+  run_once: yes
+  service:
+    name: fail2ban
+    state: restarted

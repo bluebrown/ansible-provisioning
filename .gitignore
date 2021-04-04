@@ -1,0 +1,5 @@
+inventory
+inventory.yml
+*.secrets.*
+*.secret.*
+secrets

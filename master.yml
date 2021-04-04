@@ -1,0 +1,6 @@
+---
+  - import_playbook: playbooks/sysupdate.yml
+  - import_playbook: playbooks/iptables.yml
+  - import_playbook: playbooks/sshd.yml
+  - import_playbook: playbooks/fail2ban.yml
+  - import_playbook: playbooks/docker.yml
