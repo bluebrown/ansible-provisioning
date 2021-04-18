@@ -1,11 +1,14 @@
 ---
 - name: run all
-  hosts: localhost
+  hosts: all
   become: true
   roles:
     - roles/sysupdate
     - roles/iptables
+    - roles/adduser
     - roles/sshd
     - roles/fail2ban
+    - roles/python
     - roles/docker
     - roles/golang
+    - roles/ansible

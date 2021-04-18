@@ -42,7 +42,7 @@
 - name: install docker sdk
   pip:
     name: docker
-    state: present
+    state: latest
 
 - name: copy docker daemon config
   copy: 

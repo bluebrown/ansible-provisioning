@@ -1,0 +1,24 @@
+{
+    "variables": {
+        "linode_token": ""
+    },
+    "builders": [
+        {
+            "type": "linode",
+            "linode_token": "{{user `linode_token`}}",
+            "image": "linode/ubuntu20.04",
+            "region": "eu-central",
+            "instance_type": "g6-standard-1",
+            "instance_label": "temporary-linode-{{timestamp}}",
+            "image_label": "controlplane",
+            "image_description": "controplane node",
+            "ssh_username": "root"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "playbook_file": "main.yml"
+        }
+    ]
+}
