@@ -1,0 +1,25 @@
+---
+- name: leave swarm
+  docker_swarm:
+    state: absent
+- name: Delete a network, disconnecting all containers
+  docker_network:
+    name: docker_gwbridge
+    state: absent
+    force: yes
+- name: create docker_gwbridge with fixed fixed cidr
+  docker_network:
+    name: docker_gwbridge
+    ipam_config: subnet=172.18.0.0/16
+    driver_options:
+      com.docker.network.bridge.name: docker_gwbridge
+      com.docker.network.enable_icc: false
+      com.docker.network.enable_masquerade: true
+- name: join to swarm
+  docker_swarm:
+    state: join
+    join_token: "{{SWARM_TOKEN}}"
+    remote_addrs: [ '{{COMMANDER_IP}}:2377' ]
+    labels:
+      linode_type: nanode
+      project: linode-swarm
