@@ -1,0 +1,20 @@
+---
+- name: install fail2ban package
+  apt: 
+    pkg: fail2ban
+    state: present
+  notify: restart fail2ban
+- name: copy fail2ban local config
+  copy: 
+    src: "{{ role_path }}/files/jail.local"
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart fail2ban
+- name: make sure fail2ban is enabled
+  service:
+    name: fail2ban
+    enabled: yes
+    state: restarted
+      

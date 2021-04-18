@@ -1,0 +1,13 @@
+---
+- name: copy sshd.conf to conf.d
+  copy: 
+    src: "{{ role_path }}/files/sshd.conf"
+    dest: /etc/ssh/sshd_config.d/sshd.conf
+    owner: root
+    group: root
+    mode: 0644
+- name: restart sshd
+  service:
+    name: ssh
+    state: restarted
+    enabled: yes

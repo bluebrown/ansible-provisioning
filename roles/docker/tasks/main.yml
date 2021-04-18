@@ -1,0 +1,59 @@
+---
+- name: install docker dependencies
+  apt:
+    name: "{{item}}"
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+
+- name: add repo
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: ensure docker registry is available
+  apt_repository: 
+    repo: 'deb https://download.docker.com/linux/ubuntu bionic stable' 
+    state: present
+
+- name: update apt
+  apt: 
+    update_cache: yes 
+    force_apt_get: yes 
+    cache_valid_time: 3600
+
+- name: install docker
+  apt:
+    name: "{{item}}"
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+
+- name: Install pip
+  apt:
+    name: python3-pip
+    update_cache: yes
+    state: present
+
+- name: install docker sdk
+  pip:
+    name: docker
+    state: present
+
+- name: copy docker daemon config
+  copy: 
+    src: "{{ role_path }}/files/daemon.json"
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: 0644
+
+- name: enable and restart docker service
+  service:
+    name: docker
+    state: restarted
+    enabled: true

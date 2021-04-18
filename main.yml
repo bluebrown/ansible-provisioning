@@ -1,6 +1,11 @@
 ---
-  - import_playbook: playbooks/sysupdate.yml
-  - import_playbook: playbooks/iptables.yml
-  - import_playbook: playbooks/sshd.yml
-  - import_playbook: playbooks/fail2ban.yml
-  - import_playbook: playbooks/docker.yml
+- name: run all
+  hosts: localhost
+  become: true
+  roles:
+    - roles/sysupdate
+    - roles/iptables
+    - roles/sshd
+    - roles/fail2ban
+    - roles/docker
+    - roles/golang

@@ -1,0 +1,21 @@
+---
+- name: download go binaries
+  get_url:
+    url: "https://golang.org/dl/{{package}}"
+    dest: "/usr/local/src/{{package}}"
+
+- name: Remove old installation of Go
+  file:
+    path: /usr/local/go
+    state: absent
+
+- name: extract binaries
+  unarchive:
+    src: "/usr/local/src/{{ package }}"
+    dest: /usr/local
+    copy: no
+
+- name: add gobin to path
+  copy:
+    src: "{{ role_path }}/files/gopath.sh"
+    dest: /etc/profile.d/gopath.sh
