@@ -1,0 +1,32 @@
+---
+- name: add key
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: get codename 
+  shell: lsb_release -cs
+  register: codename
+
+- name: get architecture 
+  shell:  dpkg --print-architecture
+  register: architecture
+
+- name: set repo url
+  set_fact:
+    repo: "deb [arch={{architecture.stdout_lines[0]}}] https://apt.releases.hashicorp.com {{codename.stdout_lines[0]}} main"
+
+- name: show hashicorp repo url
+  debug:
+    msg: "{{repo}}"
+
+- name: ensure hashicorp registry is available
+  apt_repository: 
+    repo: "{{repo}}"
+    state: present
+
+- name: update apt
+  apt:
+    update_cache: yes 
+    force_apt_get: yes 
+    cache_valid_time: 3600

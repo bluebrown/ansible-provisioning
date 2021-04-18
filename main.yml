@@ -8,7 +8,10 @@
     - roles/adduser
     - roles/sshd
     - roles/fail2ban
+    - roles/golang
     - roles/python
     - roles/docker
-    - roles/golang
     - roles/ansible
+    - roles/hashicorp
+    - roles/terraform
+    - roles/packer
